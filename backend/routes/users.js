@@ -39,108 +39,41 @@ const GetOneUser = async (req, res) => {
 }
 
 
-
-//get all skills
-const GetAllSkills = async (req, res) => {
-  try {
-    let allSkills = await db.any("SELECT * FROM skills")
-
-    res.json({
-      users: allSkills,
-      message: "Success"
-    })
-
-  } catch (err) {
-    console.log(err)
-    res.json({
-      message: `Error: ${err}`
-    })
+const CreateUser = async(req, res)=>{
+  let userObject = {
+    username: req.body.username,
+    email: req.body.email
   }
-}
 
-//get one skill
-const GetOneSkill = async (req, res) => {
-  try {
-    let oneSkill = await db.one("SELECT * FROM skills WHERE id = $1", [req.params.id])
+  let insertQuery = `Insert into users(username,email)
+  VALUES($/username/, $/email/) RETURNING *`
 
-    res.json({
-      users: oneSkill,
-      message: "Success"
-    })
-
-  } catch (err) {
-    res.json({
-      message: `Error: ${err}`
-    })
-  }
-}
-
-
-//patch skill
-
-const PatchUser = async (req, res) => {
-  try {
-    let patch;
-    let userUpdates = {
-      id: req.params.id,
-      shooting: parseInt(req.body.shooting),
-      handle: parseInt(req.body.handle),
-      perimiter_defence: parseInt(req.body.perimiter_defence),
-      interior_defence: parseInt(req.body.interior_defence)
-    }
-
-    let query = `UPDATE skills SET `;
-    let endQuery = `WHERE id  = $/id/ RETURNING *`
-
-    if (req.body.shooting) {
-      query += `shooting = $/shooting/, `
-    }
-
-
-    if (req.body.handle) {
-      query += `handle = $/handle/, `
-    }
-
-    if (req.body.perimiter_defence) {
-      query += `perimiter_defence = $/perimiter_defence/, `
-    }
+  try{
     
-    indx = query.lastIndexOf(',')
-
-    if (query[indx] === ","){
-      let lastIndex = query.lastIndexOf(',');
-      let newString = query.substring(0,lastIndex)
-      console.log("114",newString)
-      query = newString
+    if(req.body.username && req.body.email ){
+      await db.one(insertQuery,userObject);
+      res.json({
+        user: `${req.body.username} & ${req.body.email}`,
+        message: "posted"
+      })
+    }else{
+      res.json({
+        message: "Information Missing"
+      })
     }
+      
 
-    let fullQuery = query + endQuery
-    patch = await db.one(fullQuery, userUpdates);
+  }catch(err){
 
-
-
-    // console.log("second " + fullQuery)
-    res.json({
-      data: patch,
-      message: "success"
-    })
-
-  } catch (err) {
-    console.log(err)
-    res.json({
-      message: `Error: ${err}`
-    })
   }
 
-
 }
-
-
 /* GET users listing. */
 router.get('/', GetAllUsers);
-router.get('/skills', GetAllSkills);
+/*Get Single User */
 router.get('/:id', GetOneUser);
-router.get('/skills/:id', GetOneSkill);
-router.patch('/skills/:id', PatchUser);
+/*Post User */
+router.post('/', CreateUser);
+
 
 module.exports = router;
