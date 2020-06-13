@@ -7,6 +7,7 @@ CREATE DATABASE cityhoopz;
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     username VARCHAR UNIQUE,
+    password VARCHAR,
     email VARCHAR
 );
 
@@ -39,9 +40,9 @@ CREATE TABLE home_courts(
 );
 
 
-INSERT INTO users(username,email)
-    VALUES  ('Jaiden16','JFagan16@project.com'),
-            ('TrapLordHuey', 'HCamacho@project.com');
+INSERT INTO users(username,password,email)
+    VALUES  ('Jaiden16','1234','JFagan16@project.com'),
+            ('TrapLordHuey','1234' ,'HCamacho@project.com');
 
 INSERT INTO skills(player,shooting,handle,perimiter_defence,interior_defence, 
                     rebounding,steals,blocks,iq,leadership)

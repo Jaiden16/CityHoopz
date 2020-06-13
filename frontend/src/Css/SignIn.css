@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Piedra&display=swap');
+
+
+.SignIn-Component{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+
+#cityhoopz {
+    text-align:center;
+    font-family: "Architects Daughter";
+}
+
+
+#logo { 
+    width: 400px;
+    height: 400px;
+}

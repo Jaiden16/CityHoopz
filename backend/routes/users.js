@@ -23,8 +23,9 @@ const GetAllUsers = async (req, res) => {
 }
 //get one user
 const GetOneUser = async (req, res) => {
+  let insertQuery = `SELECT username, password FROM users WHERE id = '${req.params.id}'`
   try {
-    let oneUser = await db.any("SELECT * FROM users WHERE id = $1", [req.params.id])
+    let oneUser = await db.one(insertQuery)
 
     res.json({
       users: oneUser,
@@ -39,31 +40,32 @@ const GetOneUser = async (req, res) => {
 }
 
 
-const CreateUser = async(req, res)=>{
+const CreateUser = async (req, res) => {
   let userObject = {
     username: req.body.username,
+    password: req.body.password,
     email: req.body.email
   }
 
-  let insertQuery = `Insert into users(username,email)
-  VALUES($/username/, $/email/) RETURNING *`
+  let insertQuery = `Insert into users(username,password,email)
+  VALUES($/username/,$/password/, $/email/) RETURNING *`
 
-  try{
-    
-    if(req.body.username && req.body.email ){
-      await db.one(insertQuery,userObject);
+  try {
+
+    if (req.body.username && req.body.password && req.body.email) {
+      await db.one(insertQuery, userObject);
       res.json({
-        user: `${req.body.username} & ${req.body.email}`,
+        user: `${req.body.username} & ${req.body.password}, ${req.body.email}`,
         message: "posted"
       })
-    }else{
+    } else {
       res.json({
         message: "Information Missing"
       })
     }
-      
 
-  }catch(err){
+
+  } catch (err) {
 
   }
 
