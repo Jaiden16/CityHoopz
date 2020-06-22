@@ -6,7 +6,8 @@ const {loginRequired} = require("../auth/helpers")
 
 
 /* GET users listing. */
-router.get('/',loginRequired , queries.GetAllUsers);
+// router.get('/',loginRequired , queries.GetAllUsers);
+router.get('/', queries.GetAllUsers);
 /*Get Single User */
 router.get('/:id', queries.GetOneUser);
 

@@ -9,7 +9,8 @@ class LandingPage extends Component {
       email:"",
       password:"",
       username:"",
-      logedin: false
+      logedin: "Jaiden16",
+      userId: props.setUserId
     }
   }
   renderSignIn = () =>{
@@ -17,12 +18,16 @@ class LandingPage extends Component {
   }
 
   renderHomePage = () =>{
-    return <HomePage/>
+   
+    const {username, userId} = this.state
+    return <HomePage 
+    username = {username}
+    setUserId = {userId}/>
   }
   
   componentDidMount(){
     this.setState({
-      logedin: this.props.logged
+      logedin: this.props.logInProp
     })
   }
 

@@ -8,8 +8,8 @@ class HomePage extends Component {
     constructor(props){
         super()
         this.state ={
-            id: props.match.params.id,
-            username: ""
+            id: 2,
+            userid: props.setUserId
         }
     }
 
@@ -20,7 +20,7 @@ class HomePage extends Component {
         console.log(id)
         axios.get(url)
         .then((res) =>{
-            console.log(res);
+            console.log(res.data.users);
             let user = res.data.users.username
             this.setState({
                 username: user
@@ -30,7 +30,9 @@ class HomePage extends Component {
 
 
     componentDidMount(){
+        const {id,userid} = this.state
         this.getUser();
+        userid(id)
     }
     
         

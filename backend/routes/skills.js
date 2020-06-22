@@ -25,10 +25,13 @@ const GetAllSkills = async (req, res) => {
 //get one skill
 const GetOneSkill = async (req, res) => {
     try {
-        let oneSkill = await db.one("SELECT * FROM skills WHERE id = $1", [req.params.id])
+      let query =  `SELECT users.username,shooting,handle,perimiter_defence,interior_defence, 
+                    rebounding,steals,blocks,iq,leadership FROM skills 
+                    JOIN users ON skills.id = users.id WHERE users.id = $1`
+        let oneSkill = await db.one(query, [req.params.id])
 
         res.json({
-            users: oneSkill,
+            user: oneSkill,
             message: "Success"
         })
 

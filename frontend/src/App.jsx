@@ -8,8 +8,8 @@ import axios from "axios"
 
 // components
 import NavBar from './Components/NavBar';
-import SignIn from "./Components/SignIn";
-import HomePage from './Components/HomePage';
+import LandingPage from './Containers/LandingPage'
+import Profile from './Components/ProfilePage'
 
 
 class App extends Component {
@@ -18,55 +18,56 @@ class App extends Component {
     this.state = {
       email: "",
       password: "",
-      username: "",
-      userId: 1,
+      username: "Jaiden16",
+      id: "",
       logedIn: true
     }
   }
 
-  
-  componentDidMount(){
-    axios.get("http://localhost:3001/users")
-    .then((res)=>{
-      console.log(res)
+  setUserId = (userId) => {
+    this.setState({
+      id: userId
     })
   }
-  
-  
-  renderSignIn = () => {
-    return <SignIn/>
+
+  renderLandingPage = () => {
+    const { logedIn } = this.state
+    return <LandingPage
+      logInProp={logedIn}
+      setUserId={this.setUserId} />
   }
 
-  renderHomePage = () =>{
-    return <HomePage/>
-  }
+  // renderProfile = () => {
+  //   return <Profile />
+  // }
+
 
 
 
   publicRoute = () => (
     <Switch>
-      <Route path="/" render ={this.renderSignIn} />
+      <Route path="/" render={this.renderLandingPage} />
     </Switch>
   )
 
   privateRoute = () => (
     <Switch>
-      <Route path='/:id' component ={HomePage} />
-      {/* <Redirect to ="/:id" from="/"/> */}
+      <Route exact path='/' render={this.renderLandingPage} />
+      <Route path={`/Profile/:id`} component={Profile} />
     </Switch>
   )
 
 
 
   render() {
-    let {logedIn} = this.state
+    let { logedIn, id } = this.state
     return (
       <div className="App">
-        <NavBar />
+        <NavBar id = {id} />
         {
-          logedIn? this.privateRoute() : this.publicRoute()
+          logedIn ? this.privateRoute() : this.publicRoute()
         }
-        
+
 
       </div>
     );
