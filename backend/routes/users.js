@@ -10,5 +10,7 @@ const {loginRequired} = require("../auth/helpers")
 router.get('/', queries.GetAllUsers);
 /*Get Single User */
 router.get('/:id', queries.GetOneUser);
+/*Get user Pic */
+router.get('/picture/:id',queries.getUserPhoto)
 
 module.exports = router;

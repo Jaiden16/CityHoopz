@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { withRouter, Link } from 'react-router-dom'
-import pic from '../pictures/logo.png'
+// import { withRouter, Link } from 'react-router-dom'
+// import pic from '../pictures/logo.png'
 import axios from 'axios'
 // import '../Css/SignIn.css'
 

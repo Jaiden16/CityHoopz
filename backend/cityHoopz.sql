@@ -39,6 +39,12 @@ CREATE TABLE home_courts(
 
 );
 
+CREATE TABLE profile_picture(
+    id SERIAL PRIMARY KEY,
+    player INT REFERENCES users(id),
+    picture VARCHAR
+);
+
 
 INSERT INTO users(username,password,email)
     VALUES  ('Jaiden16','1234','JFagan16@project.com'),
@@ -55,4 +61,8 @@ INSERT INTO courts(court_name,borough,street_address)
            ('Brooklynn Bridge Park', 'Brooklynn', ' 334 Furman St, Brooklyn, NY 11201');
 
 INSERT INTO home_courts(home_court,player)
-    VALUES(1,1),(1,2)
+    VALUES(1,1),(1,2);
+
+INSERT INTO profile_picture(player,picture)
+    VALUES(1,'http://localhost:3001/images/1593214039969-IMG_5929.JPG'),
+           (2,'http://localhost:3001/images/1593213981848-IMG_5834.jpg');

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withRouter, Link } from 'react-router-dom'
+import React from "react";
+// import { withRouter, Link } from 'react-router-dom'
 import pic from '../pictures/logo.png'
 import '../Css/SignIn.css'
 

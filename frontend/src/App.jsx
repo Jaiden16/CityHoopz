@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Switch, Link, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 // networking
-import axios from "axios"
+// import axios from "axios"
 
 
 // components
