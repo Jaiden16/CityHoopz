@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import "../Css/ProfilePage.css"
 
 class profile extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class profile extends Component {
         }
     }
 
-    handleFileInput = (e) =>{
+    handleFileInput = (e) => {
         console.log("file Change")
         console.dir(e.target.files)
         this.setState({
@@ -44,20 +45,20 @@ class profile extends Component {
         })
     }
 
-    handleFileSumbit = async (e) =>{
+    handleFileSumbit = async (e) => {
         e.preventDefault();
         const data = new FormData()
-        data.append('image',this.state.imageFile)
+        data.append('image', this.state.imageFile)
         const url = "http://localhost:3001/upload"
-        try{
+        try {
             const res = await axios.post(url, data)
             console.log("data", res.data)
             this.setState({
                 imageUrl: res.data.imageUrl
             })
-        
-            
-        }catch(err){
+
+
+        } catch (err) {
             console.log(err)
         }
     }
@@ -93,20 +94,20 @@ class profile extends Component {
             })
     }
 
-    getUserPic = () =>{
-        let {id,imageUrl} = this.state
-        let url = `http://localhost:3001/users/picture/${id}`
-        axios.get(url).then((res) =>{
+    getUserPic = () => {
+        let { id, imageUrl } = this.state
+        let url = `/users/picture/${id}`
+        axios.get(url).then((res) => {
             console.log(res.data.payload.picture)
             let picture = res.data.payload.picture
             this.setState({
                 imageUrl: picture
             })
-        }).catch((err) =>{
+        }).catch((err) => {
             console.log(err)
         })
 
-        
+
 
     }
 
@@ -128,7 +129,7 @@ class profile extends Component {
         } = this.state
 
         let newStats = {}
-        let url = `http://localhost:3001/skills/${id}`
+        let url = `/skills/${id}`
 
         if (Shoot !== o_sht) {
             newStats.shooting = o_sht;
@@ -206,21 +207,34 @@ class profile extends Component {
         // console.log('player data', playerData)
         // console.log("state", this.state)
         return (
-            <div>
-                <p>{playerData.username}</p>
-                <h1>STATS</h1>
-                <ul className="stats">
-                    <li>Shooting: {Shoot}</li>
-                    <li>Handle: {Handle}</li>
-                    <li>Perimiter D: {Perimiter_defence}</li>
-                    <li>Interior D: {Interior_Defence}</li>
-                    <li>Rebounding: {Rebounding}</li>
-                    <li>Steals: {Steals}</li>
-                    <li>Blocks: {Blocks}</li>
-                    <li>BasketBall IQ: {Int}</li>
-                    <li>Leadership: {Leadership}</li>
-                </ul>
-                <img src = {this.state.imageUrl} style = {{width: 400, height:400}}alt = ""/>
+            <div className="ProfilePage">
+                <div id="profile_username">
+                    <h1 >{playerData.username}</h1>
+                </div>
+
+                <div id="Information">
+                    <h2 id= "stats">STATS</h2>
+                    <div id="UserStats">
+                        <ul id="ListedStats">
+                            <li id = "stat-item">Shooting: {Shoot}</li>
+                            <li id = "stat-item">Handle: {Handle}</li>
+                            <li id = "stat-item">Perimiter D: {Perimiter_defence}</li >
+                            <li id = "stat-item">Interior D: {Interior_Defence}</li >
+                            <li id = "stat-item">Rebounding: {Rebounding}</li >
+                            <li id = "stat-item">Steals: {Steals}</li >
+                            <li id = "stat-item">Blocks: {Blocks}</li >
+                            <li id = "stat-item">BasketBall IQ: {Int}</li>
+                            <li id = "stat-item">Leadership: {Leadership}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="UserPic">
+                    <img src={this.state.imageUrl} style={{ width: 400, height: 400 }} alt="" />
+                </div>
+
+
+
 
                 <form onSubmit={this.handleFormSumbit}>
                     {/* shooting, handle, perimiter d, interior d, rebounding, steals
@@ -266,48 +280,48 @@ class profile extends Component {
                     </select>
 
                     <label htmlFor="rebounding">Rebounding</label>
-                    <select id="rebounding" name ="o_rbd" onChange = {this.handleChange} value={o_rbd}>
-                    <option disabled>Select Rating</option>
+                    <select id="rebounding" name="o_rbd" onChange={this.handleChange} value={o_rbd}>
+                        <option disabled>Select Rating</option>
                         {stats.map((el, index) => {
                             return (
                                 <option key={index} value={el}>{el}</option>
                             )
                         })}
                     </select>
-                    
+
                     <label htmlFor="steals">Steals</label>
-                    <select id="steals" name = "o_stl"  onChange ={this.handleChange} value={o_stl}>
-                    <option disabled>Select Rating</option>
+                    <select id="steals" name="o_stl" onChange={this.handleChange} value={o_stl}>
+                        <option disabled>Select Rating</option>
                         {stats.map((el, index) => {
                             return (
                                 <option key={index} value={el}>{el}</option>
                             )
                         })}
                     </select>
-                    
+
                     <label htmlFor="blocks">Blocks</label>
-                    <select id="blocks" name = "o_blk" onChange ={this.handleChange} value={o_hndl}>
-                    <option disabled>Select Rating</option>
+                    <select id="blocks" name="o_blk" onChange={this.handleChange} value={o_hndl}>
+                        <option disabled>Select Rating</option>
                         {stats.map((el, index) => {
                             return (
                                 <option key={index} value={el}>{el}</option>
                             )
                         })}
                     </select>
-                    
+
                     <label htmlFor="IQ">BasketBall IQ</label>
-                    <select id="IQ" name = 'o_IQ' onChange ={this.handleChange} value={o_IQ}>
-                    <option disabled>Select Rating</option>
+                    <select id="IQ" name='o_IQ' onChange={this.handleChange} value={o_IQ}>
+                        <option disabled>Select Rating</option>
                         {stats.map((el, index) => {
                             return (
                                 <option key={index} value={el}>{el}</option>
                             )
                         })}
                     </select>
-                    
+
                     <label htmlFor="leadership">Leadership</label>
-                    <select id="leadership" name = "o_ldr" onChange ={this.handleChange} value={o_ldr}>
-                    <option disabled>Select Rating</option>
+                    <select id="leadership" name="o_ldr" onChange={this.handleChange} value={o_ldr}>
+                        <option disabled>Select Rating</option>
                         {stats.map((el, index) => {
                             return (
                                 <option key={index} value={el}>{el}</option>
@@ -317,7 +331,7 @@ class profile extends Component {
                     <button>Update</button>
                 </form>
 
-                <form onSubmit = {this.handleFileSumbit}>
+                <form onSubmit={this.handleFileSumbit}>
                     <label htmlFor="picture-upload">Upload Picture</label>
                     <input id="picture-upload" type="file" onChange={this.handleFileInput} />
                     <input type="submit" value="Upload" />

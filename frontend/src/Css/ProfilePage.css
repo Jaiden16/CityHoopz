@@ -1,0 +1,25 @@
+.ProfilePage{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 40px repeat(3,1fr);
+}
+
+#profile_username{
+    justify-self: stretch;
+    align-self: center;
+    grid-column: 1 / -1;
+}
+
+#Information{
+    grid-column: 2/-1;
+}
+
+
+#UserPic{
+    grid-column: 1/2;
+    grid-row: 2;
+}
+
+#ListedStats{
+    list-style: none;
+}
